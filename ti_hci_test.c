@@ -412,8 +412,6 @@ int enable_bt(int gpio)
 	execute_sys_cmd("echo 1 > /sys/class/gpio/gpio%d/value",gpio);
 } 
 
-__asm__(".symver realpath,realpath@GLIBC_2.30");
-
 int main(int argc, char *argv[])
 {
 	int fd;	
@@ -458,14 +456,14 @@ int main(int argc, char *argv[])
 	// read chip version
 
 	check_chip_version(fd);
-#if 1
+
 	fprintf(stdout,"changing HCI baudrate to %d \n",speed);
 	if (change_speed(fd, speed) < 0) {
 		fprintf(stdout,"Can't set baud rate to %d \n",speed);
 		close (fd);
 		exit (1);
 	}
-#endif
+	
 	check_chip_version(fd);
 	get_bd_address(fd);
 	
